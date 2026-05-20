@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ibraheem — home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <style>
     /* ---- HOME PAGE STYLES ---- */
@@ -24,6 +27,7 @@
       margin-top: 8px;
       text-align: right;
       padding-right: 32px;
+      font-weight: bold;
     }
 
     /* Guestbook column */
@@ -113,7 +117,7 @@
 
   <!-- FIXED NAV: "home" is active so it uses / prefix -->
   <nav class="site-nav">
-    <a href="index.html">/home</a>
+    <a href="./index.html">/home</a>
     <hr class="nav-divider" />
     <a href="resume.html">&gt;resume</a>
     <hr class="nav-divider" />
@@ -156,8 +160,8 @@ and thank you for visiting.</p>
             placeholder="your name"
             maxlength="40"
           />
-          <!-- JS: on click, read #guestbook-input value, POST to your
-               database (e.g. Supabase), then prepend a new .guestbook-entry
+          <!-- JS: on click, read #guestbook-input value, POST to
+               Supabase), then prepend a new .guestbook-entry
                row to #guestbook-entries with the name and today's date.
                Clear the input after successful submission. -->
           <button class="sign-btn" id="sign-btn">&gt;</button>
@@ -183,8 +187,75 @@ and thank you for visiting.</p>
     </div>
   </div>
 
-  <!-- JS: import your Supabase client here and wire up the sign button
-       and the initial guestbook load. -->
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module">
+    const { createClient } = supabase;
+
+    const SUPABASE_URL = 'https://imlkcpaatrknwxuvxhmj.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_r4UqvElg44z3rq0iosNy_A_N0diXxsd';
+
+    const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const input   = document.getElementById('guestbook-input');
+    const btn     = document.getElementById('sign-btn');
+    const entries = document.getElementById('guestbook-entries');
+
+    // --- LOAD entries on page load ---
+    async function loadEntries() {
+      const { data, error } = await db
+              .from('guestbook')
+              .select('visitor, created_at')
+              .order('created_at', { ascending: false });
+
+      if (error) { console.error(error); return; }
+
+      entries.innerHTML = '';
+      data.forEach(row => {
+        entries.appendChild(makeRow(row.visitor, row.created_at));
+      });
+    }
+
+    // --- SUBMIT new entry ---
+    btn.addEventListener('click', async () => {
+      const name = input.value.trim();
+      if (!name) return;
+
+      const { error } = await db
+              .from('guestbook')
+              .insert({ visitor: name });
+
+      if (error) { console.error(error); return; }
+
+      // Optimistically prepend the new entry without a full reload
+      entries.prepend(makeRow(name, new Date().toISOString()));
+      input.value = '';
+    });
+
+    // --- BUILD a row element ---
+    function makeRow(name, timestamp) {
+      const row  = document.createElement('div');
+      row.className = 'guestbook-entry';
+
+      const date = new Date(timestamp).toLocaleDateString('en-CA'); // YYYY-MM-DD
+
+      row.innerHTML = `
+      <span>${escapeHtml(name)}</span>
+      <span>${date}</span>
+    `;
+      return row;
+    }
+
+    // --- Sanitise user input before injecting into DOM ---
+    function escapeHtml(str) {
+      return str
+              .replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;');
+    }
+
+    loadEntries();
+  </script>
 </body>
 </html>

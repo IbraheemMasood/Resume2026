@@ -14,7 +14,7 @@
   --salmon: #f0c9a8;
   --white:  #ffffff;
   --black:  #111111;
-  --font:   "Courier New", Courier, monospace;
+  --font:   "Martian Mono", Courier, monospace;
   --nav-width: 140px;
 }
 
@@ -23,6 +23,7 @@ html, body {
 }
 
 body {
+
   background-color: var(--blue);
   color: var(--black);
   font-family: var(--font);
@@ -67,7 +68,7 @@ a {
 .site-nav .nav-divider {
   /* dashed separator between nav items */
   border: none;
-  border-top: 1px dashed var(--black);
+  border-top: 2px dashed var(--black);
   margin: 2px 0;
 }
 
@@ -83,7 +84,7 @@ a {
 .page-heading-dashes {
   /* the dashed underline below headings */
   font-family: var(--font);
-  font-size: 14px;
+  font-size: 39px;
   letter-spacing: 2px;
   color: var(--black);
   margin-bottom: 24px;

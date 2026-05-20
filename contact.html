@@ -1,137 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ibraheem — contact</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* ---- CONTACT PAGE STYLES ---- */
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ibraheem — contact</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&display=swap" rel="stylesheet">
+    <style>
+        /* ---- CONTACT PAGE STYLES ---- */
 
-    .contact-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      margin-top: 16px;
-    }
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-top: 16px;
+        }
 
-    /* Form fields */
-    .form-group {
-      margin-bottom: 16px;
-    }
+        /* Form fields */
+        .form-group {
+            margin-bottom: 16px;
+        }
 
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
 
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      font-family: var(--font);
-      font-size: 14px;
-      border: 1.5px solid var(--black);
-      padding: 6px 8px;
-      background: var(--white);
-      outline: none;
-      resize: vertical;
-    }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            font-family: var(--font);
+            font-size: 14px;
+            border: 1.5px solid var(--black);
+            padding: 6px 8px;
+            background: var(--white);
+            outline: none;
+            resize: vertical;
+        }
 
-    .form-group textarea {
-      height: 160px;
-    }
+        .form-group textarea {
+            height: 160px;
+        }
 
-    /* Arrow send button — pentagon shape via clip-path */
-    .send-btn {
-      display: inline-block;
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: bold;
-      background: var(--salmon);
-      border: 1.5px solid var(--black);
-      padding: 8px 24px 8px 16px;
-      cursor: pointer;
-      clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%);
-      margin-top: 8px;
-    }
+        .send-btn {
+            display: inline-flex;
+            font-family: var(--font);
+            font-size: 14px;
+            font-weight: bold;
+            background: var(--salmon);
+            border: 1.5px solid var(--black);
+            cursor: pointer;
+            padding: 0;
+            margin-top: 8px;
+        }
 
-    .send-btn:hover {
-      background: var(--black);
-      color: var(--white);
-    }
+        .send-btn-label {
+            padding: 8px 16px;
+            border-right: 1.5px solid var(--black);
+        }
 
-    /* Description text on the right */
-    .contact-description {
-      padding-top: 8px;
-      line-height: 1.7;
-    }
+        .send-btn-arrow {
+            padding: 8px 12px;
+        }
 
-    @media (max-width: 768px) {
-      .contact-layout {
-        grid-template-columns: 1fr;
-      }
+        .send-btn:hover {
+            background: var(--black);
+            color: var(--white);
+        }
 
-      /* Show description above the form on mobile */
-      .contact-description {
-        order: -1;
-      }
-    }
-  </style>
+        .send-btn:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* Description text on the right */
+        .contact-description {
+            padding-top: 8px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+
+            /* Show description above the form on mobile */
+            .contact-description {
+                order: -1;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- FIXED NAV: "contact" is active so it uses / prefix -->
-  <nav class="site-nav">
-    <a href="index.html">&gt;home</a>
-    <hr class="nav-divider" />
+<!-- FIXED NAV: "contact" is active so it uses / prefix -->
+<nav class="site-nav">
+    <a href="./index.html">>home</a>
+    <hr class="nav-divider"/>
     <a href="resume.html">&gt;resume</a>
-    <hr class="nav-divider" />
+    <hr class="nav-divider"/>
     <a href="contact.html">/contact</a>
-    <hr class="nav-divider" />
+    <hr class="nav-divider"/>
     <a href="blog.html">&gt;blog</a>
-  </nav>
+</nav>
 
-  <div class="mobile-note">! best experienced on desktop</div>
+<div class="mobile-note">! best experienced on desktop</div>
 
-  <h1 class="page-heading">contact me</h1>
-  <div class="page-heading-dashes">---------</div>
+<h1 class="page-heading">contact me</h1>
+<div class="page-heading-dashes">------------</div>
 
-  <div class="contact-layout">
+
+<div class="contact-layout">
 
     <!-- LEFT: Form -->
     <div class="contact-form">
-      <div class="form-group">
-        <label for="name">name</label>
-        <input type="text" id="name" name="name" />
-      </div>
+        <div class="form-group">
+            <label for="name">name</label>
+            <input type="text" id="name" name="name"/>
+        </div>
 
-      <div class="form-group">
-        <label for="email">email</label>
-        <input type="email" id="email" name="email" />
-      </div>
+        <div class="form-group">
+            <label for="email">email</label>
+            <input type="email" id="email" name="email"/>
+        </div>
 
-      <div class="form-group">
-        <label for="message">message</label>
-        <textarea id="message" name="message"></textarea>
-      </div>
+        <div class="form-group">
+            <label for="message">message</label>
+            <textarea id="message" name="message"></textarea>
+        </div>
 
-      <!-- JS: on click, validate fields, then POST to your form endpoint
-           (e.g. Formspree: action="https://formspree.io/f/YOUR_ID").
-           Show a brief confirmation message on success. -->
-      <button class="send-btn" id="send-btn">send</button>
+        <!-- JS: on click, validate fields, then POST to your form endpoint
+             Show a brief confirmation message on success. -->
+        <button class="send-btn" id="send-btn">
+            <span class="send-btn-label">send</span>
+            <span class="send-btn-arrow">&gt;</span>
+        </button>
     </div>
 
     <!-- RIGHT: Description -->
     <div class="contact-description">
-      <p>Contacting me through this form
-guarantees I read your message.
-Alternatively you can contact
-me through discord
-<strong>@ibraheem_masood</strong></p>
+        <p>Contacting me through this form
+            guarantees I read your message.
+            Alternatively you can contact
+            me through discord
+            <strong>@ibraheem_masood</strong></p>
     </div>
 
-  </div>
+</div>
+<script>
+    const btn     = document.getElementById('send-btn');
+    const name    = document.getElementById('name');
+    const email   = document.getElementById('email');
+    const message = document.getElementById('message');
 
+    btn.addEventListener('click', async function () {
+
+        // Basic validation
+        if (!name.value.trim() || !email.value.trim() || !message.value.trim()) {
+            showStatus('all fields required', true);
+            return;
+        }
+
+        btn.disabled = true;
+        showStatus('sending...', false);
+
+        try {
+            const res = await fetch('https://formspree.io/f/xaqkqayk', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name:    name.value.trim(),
+                    email:   email.value.trim(),
+                    message: message.value.trim(),
+                }),
+            });
+
+            if (res.ok) {
+                showStatus('message sent.', false);
+                name.value    = '';
+                email.value   = '';
+                message.value = '';
+            } else {
+                showStatus('something went wrong, try discord', true);
+            }
+        } catch (e) {
+            showStatus('something went wrong, try discord', true);
+        }
+
+        btn.disabled = false;
+    });
+
+    function showStatus(msg, isError) {
+        let status = document.getElementById('form-status');
+        if (!status) {
+            status = document.createElement('div');
+            status.id = 'form-status';
+            status.style.cssText = 'margin-top: 8px; font-size: 13px;';
+            btn.parentNode.insertBefore(status, btn.nextSibling);
+        }
+        status.textContent = msg;
+        status.style.color = isError ? '#c0392b' : '#555';
+    }
+</script>
 </body>
 </html>

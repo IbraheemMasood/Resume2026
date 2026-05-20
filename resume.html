@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ibraheem — resume</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&display=swap" rel="stylesheet">
   <style>
     /* ---- RESUME PAGE STYLES ---- */
 
@@ -22,7 +25,7 @@
     .resume-box {
       border: 1.5px solid var(--black);
       background: var(--white);
-      height: calc(100vh - 160px); /* fill most of the viewport */
+      height: calc(65vh); /* fill most of the viewport */
       overflow-y: scroll;
       padding: 24px 28px;
       scroll-behavior: smooth;
@@ -82,7 +85,8 @@
 
     /* Terminal bar — fixed at bottom of viewport */
     .terminal-bar {
-      position: fixed;
+      position: static;
+      width: 100%;
       bottom: 0;
       left: 0;
       right: 0;
@@ -176,7 +180,7 @@
 
   <!-- FIXED NAV: "resume" is active so it uses / prefix -->
   <nav class="site-nav">
-    <a href="index.html">&gt;home</a>
+    <a href="./index.html">>home</a>
     <hr class="nav-divider" />
     <a href="resume.html">/resume</a>
     <hr class="nav-divider" />
@@ -192,39 +196,57 @@
 
   <div class="resume-layout">
 
-    <!-- Scrollable resume content -->
-    <!-- JS: to support cd <section>, you'll scroll this element, not
-         window. Store a reference: const box = document.querySelector('.resume-box')
-         Then: box.scrollTop = document.querySelector('#work-experience').offsetTop -->
+
     <div class="resume-box" id="resume-box">
 
       <section class="resume-section" id="work-experience">
         <h2>/work experience</h2>
-        <!-- Add your work experience entries here -->
+        <!-- Add work experience entries here -->
+
       </section>
 
       <section class="resume-section" id="education">
         <h2>&gt;education</h2>
-        <!-- Add your education entries here -->
+        <!-- Add education entries here -->
       </section>
 
       <section class="resume-section" id="projects">
         <h2>&gt;projects</h2>
-        <!-- Add your projects here -->
+        <!-- Add projects here -->
       </section>
 
-      <section class="resume-section" id="awards">
-        <h2>&gt;awards</h2>
-        <!-- Add your awards here -->
+      <section class="resume-section" id="skills">
+        <h2>&gt;skills</h2>
+        <!-- Add skills here -->
       </section>
 
       <section class="resume-section" id="hobbies">
         <h2>&gt;hobbies</h2>
-        <!-- Add your hobbies here -->
+        <!-- Add hobbies here -->
       </section>
 
     </div>
 
+    <!-- TERMINAL BAR -->
+    <div class="terminal-bar">
+      <span class="terminal-prompt">~/resume&gt;</span>
+      <!-- JS: listen for Enter on this input.
+           Parse the command:
+             "cd <section>"     → scroll resume-box to that section id
+             "cd ../<page>"     → navigate with window.location.href
+           On unrecognised command, briefly flash the input red or show
+           a short error in the hint span.
+           Clear the input after each command. -->
+      <span class="terminal-cursor"></span>
+      <input
+              class="terminal-input"
+              id="terminal-input"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+      />
+      <span class="terminal-hint" id="terminal-hint">hint: try cd skills, or grep python</span>
+    </div>
     <!-- TOC: semi-transparent, full opacity on hover -->
     <!-- JS: as the user scrolls the resume box, update the active
          section in the TOC by swapping > for / on the current section link.
@@ -237,33 +259,296 @@
       <hr class="nav-divider" />
       <a href="#projects" data-section="projects">&gt;projects</a>
       <hr class="nav-divider" />
-      <a href="#awards" data-section="awards">&gt;awards</a>
+      <a href="#skills" data-section="skills">&gt;skills</a>
       <hr class="nav-divider" />
       <a href="#hobbies" data-section="hobbies">&gt;hobbies</a>
     </nav>
 
   </div>
 
-  <!-- TERMINAL BAR -->
-  <div class="terminal-bar">
-    <span class="terminal-prompt">~/resume&gt;</span>
-    <!-- JS: listen for Enter on this input.
-         Parse the command:
-           "cd <section>"     → scroll resume-box to that section id
-           "cd ../<page>"     → navigate with window.location.href
-         On unrecognised command, briefly flash the input red or show
-         a short error in the hint span.
-         Clear the input after each command. -->
-    <input
-      class="terminal-input"
-      id="terminal-input"
-      type="text"
-      autocomplete="off"
-      spellcheck="false"
-    />
-    <span class="terminal-cursor"></span>
-    <span class="terminal-hint" id="terminal-hint">hint: try cd awards</span>
-  </div>
+<script>
+  (function () {
 
+    // ============================================================
+    // CONSTANTS & STATE
+    // ============================================================
+
+    const box      = document.getElementById('resume-box');
+    const input    = document.getElementById('terminal-input');
+    const hint     = document.getElementById('terminal-hint');
+    const tocLinks = document.querySelectorAll('.resume-toc a');
+    const cursor   = document.querySelector('.terminal-cursor');
+
+    const SECTIONS = ['work-experience', 'education', 'projects', 'skills', 'hobbies'];
+
+    const PAGES = {
+      home:    'index.html',
+      contact: 'contact.html',
+      blog:    'blog.html',
+    };
+
+    let matches    = [];
+    let matchIndex = -1;
+
+    // ============================================================
+    // TOC CLICK HANDLERS  ← now after tocLinks is declared
+    // ============================================================
+
+    tocLinks.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        scrollToSection(link.dataset.section);
+      });
+    });
+
+    // cursor focus/blur
+    input.addEventListener('focus', () => cursor.style.display = 'none');
+    input.addEventListener('blur',  () => cursor.style.display = 'inline-block');
+
+    // ============================================================
+    // TERMINAL — COMMAND PARSING
+    // ============================================================
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+
+      const raw     = input.value.trim();
+      const parts   = raw.split(/\s+/);
+      const command = parts[0];
+      const arg     = parts.slice(1).join(' ');
+
+      if (command === 'cd') {
+        handleCd(arg);
+      } else if (command === 'grep') {
+        handleGrep(arg);
+      } else {
+        showHint('unknown command: ' + command, true);
+      }
+
+      input.value = '';
+    });
+
+    // ============================================================
+    // CD — NAVIGATION
+    // ============================================================
+
+    function handleCd(arg) {
+      // cd ../<page>  →  navigate to another page
+      if (arg.startsWith('../')) {
+        const page = arg.slice(3).toLowerCase();
+        if (PAGES[page]) {
+          window.location.href = PAGES[page];
+        } else {
+          showHint('no such page: ' + page, true);
+        }
+        return;
+      }
+
+      // cd <section>  →  scroll resume box to that section
+      // normalise: "work experience" and "work-experience" both work
+      const normalised = arg.toLowerCase().replace(/\s+/g, '-');
+      if (SECTIONS.includes(normalised)) {
+        scrollToSection(normalised);
+        showHint('cd ' + normalised, false);
+      } else {
+        showHint('no such section: ' + arg, true);
+      }
+    }
+
+    function scrollToSection(id) {
+      const target = document.getElementById(id);
+      if (!target) return;
+      // scroll the resume box, not the window
+      box.scrollTop = target.offsetTop - 16;
+      updateToc(id);
+    }
+
+    // ============================================================
+    // GREP — SEARCH & HIGHLIGHT
+    // ============================================================
+
+    function handleGrep(pattern) {
+      clearHighlights();
+
+      if (!pattern) {
+        showHint('usage: grep <pattern>', true);
+        return;
+      }
+
+      let regex;
+      try {
+        // -i flag for case insensitive: grep -i <pattern>
+        if (pattern.startsWith('-i ')) {
+          regex = new RegExp(pattern.slice(3), 'gi');
+        } else {
+          regex = new RegExp(pattern, 'g');
+        }
+      } catch (e) {
+        showHint('invalid regex: ' + pattern, true);
+        return;
+      }
+
+      // Walk every text node inside the resume box and wrap matches
+      walkAndHighlight(box, regex);
+
+      matches = Array.from(box.querySelectorAll('mark.grep-match'));
+
+      if (matches.length === 0) {
+        showHint('no matches: ' + pattern, true);
+        return;
+      }
+
+      matchIndex = 0;
+      jumpToMatch(matchIndex);
+      updateMatchHint();
+    }
+
+    function walkAndHighlight(root, regex) {
+      // TreeWalker visits every text node in the resume box
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodesToReplace = [];
+
+      let node;
+      while ((node = walker.nextNode())) {
+        if (regex.test(node.textContent)) {
+          nodesToReplace.push(node);
+        }
+        regex.lastIndex = 0; // reset stateful regex after each test
+      }
+
+      nodesToReplace.forEach(function (textNode) {
+        const frag = document.createDocumentFragment();
+        const parts = textNode.textContent.split(regex);
+        const rawMatches = textNode.textContent.match(regex) || [];
+
+        parts.forEach(function (part, i) {
+          frag.appendChild(document.createTextNode(part));
+          if (rawMatches[i]) {
+            const mark = document.createElement('mark');
+            mark.className = 'grep-match';
+            mark.textContent = rawMatches[i];
+            frag.appendChild(mark);
+          }
+        });
+
+        textNode.parentNode.replaceChild(frag, textNode);
+      });
+    }
+
+    function clearHighlights() {
+      // Unwrap all <mark> elements, restoring original text nodes
+      box.querySelectorAll('mark.grep-match').forEach(function (mark) {
+        const parent = mark.parentNode;
+        parent.replaceChild(document.createTextNode(mark.textContent), mark);
+        parent.normalize(); // merge adjacent text nodes
+      });
+      matches    = [];
+      matchIndex = -1;
+    }
+
+    function jumpToMatch(index) {
+      // Remove active class from all, add to current
+      matches.forEach(function (m) { m.classList.remove('grep-active'); });
+      const current = matches[index];
+      current.classList.add('grep-active');
+      // Scroll resume box so the match is visible
+      box.scrollTop = current.offsetTop - box.offsetTop - 80;
+    }
+
+    function updateMatchHint() {
+      hint.textContent = (matchIndex + 1) + '/' + matches.length
+              + '   ▲▼ to navigate   esc to clear';
+    }
+
+    // ============================================================
+    // GREP — ARROW NAVIGATION
+    // ============================================================
+
+    input.addEventListener('keydown', function (e) {
+      if (matches.length === 0) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        matchIndex = (matchIndex + 1) % matches.length;
+        jumpToMatch(matchIndex);
+        updateMatchHint();
+      }
+
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        matchIndex = (matchIndex - 1 + matches.length) % matches.length;
+        jumpToMatch(matchIndex);
+        updateMatchHint();
+      }
+
+      if (e.key === 'Escape') {
+        clearHighlights();
+        showHint('hint: try cd skills, or grep python', false);
+      }
+    });
+
+    // ============================================================
+    // TOC — ACTIVE SECTION ON SCROLL
+    // ============================================================
+
+    box.addEventListener('scroll', function () {
+      let current = SECTIONS[0];
+
+      SECTIONS.forEach(function (id) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop - 32 <= box.scrollTop) {
+          current = id;
+        }
+      });
+
+      updateToc(current);
+    });
+
+    function updateToc(activeId) {
+      tocLinks.forEach(function (link) {
+        const section = link.dataset.section;
+        const isActive = section === activeId;
+        // swap > for / on active, / for > on inactive
+        link.textContent = (isActive ? '/' : '>') + link.textContent.slice(1);
+      });
+    }
+
+    // ============================================================
+    // HINT TEXT HELPER
+    // ============================================================
+
+    function showHint(message, isError) {
+      hint.textContent = message;
+      hint.style.color = isError ? '#c0392b' : '#555';
+      // reset colour after 2 seconds
+      if (isError) {
+        setTimeout(function () {
+          hint.style.color = '#555';
+        }, 2000);
+      }
+    }
+
+    // ============================================================
+    // GREP HIGHLIGHT STYLES  (injected so they live with the JS)
+    // ============================================================
+
+    const style = document.createElement('style');
+    style.textContent = `
+    mark.grep-match {
+      background: var(--salmon);
+      color: var(--black);
+      border-radius: 0;
+      padding: 0 1px;
+    }
+    mark.grep-active {
+      background: var(--black);
+      color: var(--white);
+    }
+  `;
+    document.head.appendChild(style);
+
+  }());
+
+</script>
 </body>
 </html>
