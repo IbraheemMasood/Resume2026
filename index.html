@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ibraheem — home</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ---- HOME PAGE STYLES ---- */
+
+    .home-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 16px;
+    }
+
+    /* Bio column */
+    .bio p {
+      margin-bottom: 16px;
+    }
+
+    .bio-signoff {
+      margin-top: 8px;
+      text-align: right;
+      padding-right: 32px;
+    }
+
+    /* Guestbook column */
+    .guestbook-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sign-row {
+      display: flex;
+      gap: 0;
+    }
+
+    .sign-input {
+      flex: 1;
+      font-family: var(--font);
+      font-size: 14px;
+      border: 1.5px solid var(--black);
+      border-right: none;
+      padding: 6px 8px;
+      background: var(--white);
+      outline: none;
+    }
+
+    .sign-btn {
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: bold;
+      background: var(--salmon);
+      border: 1.5px solid var(--black);
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    .sign-btn:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .sign-label {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .guestbook-box {
+      border: 1.5px solid var(--black);
+      background: var(--white);
+      height: 280px;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .guestbook-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      font-weight: bold;
+      border-bottom: 1px dashed var(--black);
+      padding-bottom: 4px;
+      margin-bottom: 4px;
+    }
+
+    /* Each guestbook entry row */
+    .guestbook-entry {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      padding: 3px 0;
+      border-bottom: 1px solid #ddd;
+      font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+      .home-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .bio-signoff {
+        padding-right: 0;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIXED NAV: "home" is active so it uses / prefix -->
+  <nav class="site-nav">
+    <a href="index.html">/home</a>
+    <hr class="nav-divider" />
+    <a href="resume.html">&gt;resume</a>
+    <hr class="nav-divider" />
+    <a href="contact.html">&gt;contact</a>
+    <hr class="nav-divider" />
+    <a href="blog.html">&gt;blog</a>
+  </nav>
+
+  <div class="mobile-note">! best experienced on desktop</div>
+
+  <h1 class="page-heading">home</h1>
+  <div class="page-heading-dashes">---------</div>
+
+  <div class="home-layout">
+
+    <!-- LEFT: Bio -->
+    <div class="bio">
+      <p>Hello, my name is Ibraheem. I am
+a third year Computing Science
+major at Simon Fraser University,
+with experience in UX and
+graphic design.</p>
+      <p>This website hosts my resume,
+projects, and contact info.</p>
+      <p>Consider signing the guestbook,
+and thank you for visiting.</p>
+      <p class="bio-signoff">—Ibraheem</p>
+    </div>
+
+    <!-- RIGHT: Guestbook -->
+    <div class="guestbook-section">
+
+      <div>
+        <div class="sign-label">sign here</div>
+        <div class="sign-row">
+          <input
+            class="sign-input"
+            type="text"
+            id="guestbook-input"
+            placeholder="your name"
+            maxlength="40"
+          />
+          <!-- JS: on click, read #guestbook-input value, POST to your
+               database (e.g. Supabase), then prepend a new .guestbook-entry
+               row to #guestbook-entries with the name and today's date.
+               Clear the input after successful submission. -->
+          <button class="sign-btn" id="sign-btn">&gt;</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="sign-label">guestbook</div>
+        <div class="guestbook-box">
+          <div class="guestbook-header">
+            <span>visitor</span>
+            <span>date</span>
+          </div>
+          <!-- JS: on page load, fetch all guestbook entries from your
+               database and render them here as .guestbook-entry divs.
+               Most recent entry should appear at the top. -->
+          <div id="guestbook-entries">
+            <!-- entries injected here by JS -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JS: import your Supabase client here and wire up the sign button
+       and the initial guestbook load. -->
+
+</body>
+</html>

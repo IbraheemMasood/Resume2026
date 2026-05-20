@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ibraheem — resume</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ---- RESUME PAGE STYLES ---- */
+
+    /* Override body padding-bottom to account for terminal bar */
+    body {
+      padding-bottom: 56px;
+    }
+
+    .resume-layout {
+      position: relative;
+      margin-top: 16px;
+    }
+
+    /* The scrollable resume content box */
+    .resume-box {
+      border: 1.5px solid var(--black);
+      background: var(--white);
+      height: calc(100vh - 160px); /* fill most of the viewport */
+      overflow-y: scroll;
+      padding: 24px 28px;
+      scroll-behavior: smooth;
+    }
+
+    /* Each section inside the resume */
+    .resume-section {
+      margin-bottom: 40px;
+    }
+
+    .resume-section h2 {
+      font-family: var(--font);
+      font-size: 16px;
+      font-weight: bold;
+      border-bottom: 1px dashed var(--black);
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+    }
+
+    /* TOC box — floats to the right, overlapping the resume box */
+    .resume-toc {
+      position: absolute;
+      top: 50%;           /* vertically centered alongside the resume box */
+      right: -20px;       /* slightly outside the resume box right edge */
+      transform: translateY(-50%);
+      background: var(--salmon);
+      border: 1.5px solid var(--black);
+      padding: 12px 14px;
+      z-index: 10;
+
+      /* Semi-transparent until hovered */
+      opacity: 0.35;
+      transition: opacity 120ms ease;
+    }
+
+    .resume-toc:hover {
+      opacity: 1;
+    }
+
+    .resume-toc a {
+      display: block;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: bold;
+      padding: 3px 0;
+    }
+
+    .resume-toc a:hover {
+      text-decoration: underline;
+    }
+
+    .resume-toc .nav-divider {
+      border: none;
+      border-top: 1px dashed var(--black);
+      margin: 2px 0;
+    }
+
+    /* Terminal bar — fixed at bottom of viewport */
+    .terminal-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--salmon);
+      border-top: 1.5px solid var(--black);
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      gap: 8px;
+      font-family: var(--font);
+      font-size: 14px;
+      z-index: 200;
+    }
+
+    .terminal-prompt {
+      white-space: nowrap;
+      font-weight: bold;
+      color: #7a4a00;
+    }
+
+    .terminal-input {
+      flex: 1;
+      font-family: var(--font);
+      font-size: 14px;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--black);
+      caret-color: var(--black);
+    }
+
+    /* Blinking cursor shown when input is empty and unfocused */
+    .terminal-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: var(--black);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* Hide cursor when input is focused (real caret takes over) */
+    .terminal-input:focus ~ .terminal-cursor {
+      display: none;
+    }
+
+    .terminal-hint {
+      font-size: 13px;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    /* On mobile: hide terminal, show plain TOC instead */
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 16px;
+      }
+
+      .terminal-bar {
+        display: none;
+      }
+
+      .resume-toc {
+        position: static;
+        transform: none;
+        opacity: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0 16px;
+        margin-bottom: 12px;
+        width: 100%;
+      }
+
+      .resume-toc .nav-divider {
+        display: none;
+      }
+
+      .resume-box {
+        height: auto;
+        overflow-y: visible;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIXED NAV: "resume" is active so it uses / prefix -->
+  <nav class="site-nav">
+    <a href="index.html">&gt;home</a>
+    <hr class="nav-divider" />
+    <a href="resume.html">/resume</a>
+    <hr class="nav-divider" />
+    <a href="contact.html">&gt;contact</a>
+    <hr class="nav-divider" />
+    <a href="blog.html">&gt;blog</a>
+  </nav>
+
+  <div class="mobile-note">! best experienced on desktop</div>
+
+  <h1 class="page-heading">resume</h1>
+  <div class="page-heading-dashes">------------------------------</div>
+
+  <div class="resume-layout">
+
+    <!-- Scrollable resume content -->
+    <!-- JS: to support cd <section>, you'll scroll this element, not
+         window. Store a reference: const box = document.querySelector('.resume-box')
+         Then: box.scrollTop = document.querySelector('#work-experience').offsetTop -->
+    <div class="resume-box" id="resume-box">
+
+      <section class="resume-section" id="work-experience">
+        <h2>/work experience</h2>
+        <!-- Add your work experience entries here -->
+      </section>
+
+      <section class="resume-section" id="education">
+        <h2>&gt;education</h2>
+        <!-- Add your education entries here -->
+      </section>
+
+      <section class="resume-section" id="projects">
+        <h2>&gt;projects</h2>
+        <!-- Add your projects here -->
+      </section>
+
+      <section class="resume-section" id="awards">
+        <h2>&gt;awards</h2>
+        <!-- Add your awards here -->
+      </section>
+
+      <section class="resume-section" id="hobbies">
+        <h2>&gt;hobbies</h2>
+        <!-- Add your hobbies here -->
+      </section>
+
+    </div>
+
+    <!-- TOC: semi-transparent, full opacity on hover -->
+    <!-- JS: as the user scrolls the resume box, update the active
+         section in the TOC by swapping > for / on the current section link.
+         Listen to the 'scroll' event on #resume-box and check each
+         section's offsetTop against box.scrollTop. -->
+    <nav class="resume-toc">
+      <a href="#work-experience" data-section="work-experience">/work experience</a>
+      <hr class="nav-divider" />
+      <a href="#education" data-section="education">&gt;education</a>
+      <hr class="nav-divider" />
+      <a href="#projects" data-section="projects">&gt;projects</a>
+      <hr class="nav-divider" />
+      <a href="#awards" data-section="awards">&gt;awards</a>
+      <hr class="nav-divider" />
+      <a href="#hobbies" data-section="hobbies">&gt;hobbies</a>
+    </nav>
+
+  </div>
+
+  <!-- TERMINAL BAR -->
+  <div class="terminal-bar">
+    <span class="terminal-prompt">~/resume&gt;</span>
+    <!-- JS: listen for Enter on this input.
+         Parse the command:
+           "cd <section>"     → scroll resume-box to that section id
+           "cd ../<page>"     → navigate with window.location.href
+         On unrecognised command, briefly flash the input red or show
+         a short error in the hint span.
+         Clear the input after each command. -->
+    <input
+      class="terminal-input"
+      id="terminal-input"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <span class="terminal-cursor"></span>
+    <span class="terminal-hint" id="terminal-hint">hint: try cd awards</span>
+  </div>
+
+</body>
+</html>

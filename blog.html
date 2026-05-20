@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ibraheem — blog</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ---- BLOG PAGE STYLES ---- */
+
+    .blog-list {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Each blog post row */
+    .blog-entry {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 16px;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--black);
+    }
+
+    .blog-entry:first-child {
+      border-top: 1px dashed var(--black);
+    }
+
+    .blog-entry-index {
+      color: #555;
+      font-size: 13px;
+      min-width: 24px;
+    }
+
+    .blog-entry-title a {
+      font-weight: bold;
+    }
+
+    .blog-entry-title a:hover {
+      text-decoration: underline;
+    }
+
+    .blog-entry-date {
+      font-size: 13px;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    /* Individual post page styles (reuse this file for post pages too) */
+    .blog-post {
+      margin-top: 16px;
+      max-width: 640px;
+    }
+
+    .blog-post p {
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIXED NAV: "blog" is active so it uses / prefix -->
+  <nav class="site-nav">
+    <a href="index.html">&gt;home</a>
+    <hr class="nav-divider" />
+    <a href="resume.html">&gt;resume</a>
+    <hr class="nav-divider" />
+    <a href="contact.html">&gt;contact</a>
+    <hr class="nav-divider" />
+    <a href="blog.html">/blog</a>
+  </nav>
+
+  <div class="mobile-note">! best experienced on desktop</div>
+
+  <h1 class="page-heading">blog</h1>
+  <div class="page-heading-dashes">---------</div>
+
+  <!-- Blog post list -->
+  <div class="blog-list">
+
+    <!-- Repeat .blog-entry for each post, newest first -->
+    <div class="blog-entry">
+      <span class="blog-entry-index">01</span>
+      <span class="blog-entry-title">
+        <a href="posts/post-01.html">&gt; post title goes here</a>
+      </span>
+      <span class="blog-entry-date">2025-01-01</span>
+    </div>
+
+    <!-- Add more entries here as you write posts -->
+
+  </div>
+
+</body>
+</html>

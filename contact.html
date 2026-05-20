@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ibraheem — contact</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ---- CONTACT PAGE STYLES ---- */
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 16px;
+    }
+
+    /* Form fields */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      font-family: var(--font);
+      font-size: 14px;
+      border: 1.5px solid var(--black);
+      padding: 6px 8px;
+      background: var(--white);
+      outline: none;
+      resize: vertical;
+    }
+
+    .form-group textarea {
+      height: 160px;
+    }
+
+    /* Arrow send button — pentagon shape via clip-path */
+    .send-btn {
+      display: inline-block;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: bold;
+      background: var(--salmon);
+      border: 1.5px solid var(--black);
+      padding: 8px 24px 8px 16px;
+      cursor: pointer;
+      clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%);
+      margin-top: 8px;
+    }
+
+    .send-btn:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* Description text on the right */
+    .contact-description {
+      padding-top: 8px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      /* Show description above the form on mobile */
+      .contact-description {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIXED NAV: "contact" is active so it uses / prefix -->
+  <nav class="site-nav">
+    <a href="index.html">&gt;home</a>
+    <hr class="nav-divider" />
+    <a href="resume.html">&gt;resume</a>
+    <hr class="nav-divider" />
+    <a href="contact.html">/contact</a>
+    <hr class="nav-divider" />
+    <a href="blog.html">&gt;blog</a>
+  </nav>
+
+  <div class="mobile-note">! best experienced on desktop</div>
+
+  <h1 class="page-heading">contact me</h1>
+  <div class="page-heading-dashes">---------</div>
+
+  <div class="contact-layout">
+
+    <!-- LEFT: Form -->
+    <div class="contact-form">
+      <div class="form-group">
+        <label for="name">name</label>
+        <input type="text" id="name" name="name" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">email</label>
+        <input type="email" id="email" name="email" />
+      </div>
+
+      <div class="form-group">
+        <label for="message">message</label>
+        <textarea id="message" name="message"></textarea>
+      </div>
+
+      <!-- JS: on click, validate fields, then POST to your form endpoint
+           (e.g. Formspree: action="https://formspree.io/f/YOUR_ID").
+           Show a brief confirmation message on success. -->
+      <button class="send-btn" id="send-btn">send</button>
+    </div>
+
+    <!-- RIGHT: Description -->
+    <div class="contact-description">
+      <p>Contacting me through this form
+guarantees I read your message.
+Alternatively you can contact
+me through discord
+<strong>@ibraheem_masood</strong></p>
+    </div>
+
+  </div>
+
+</body>
+</html>
