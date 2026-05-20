@@ -474,7 +474,7 @@
             autocomplete="off"
             spellcheck="false"
     />
-    <span class="terminal-hint" id="terminal-hint">hint: try cd skills, or grep python</span>
+    <span class="terminal-hint" id="terminal-hint">hint: try cd skills, or grep -i python</span>
 </div>
 <!-- TOC: semi-transparent, full opacity on hover -->
 <!-- JS: as the user scrolls the resume box, update the active
@@ -714,7 +714,7 @@
 
             if (e.key === 'Escape') {
                 clearHighlights();
-                showHint('hint: try cd skills, or grep python', false);
+                showHint('hint: try cd skills, or grep -i python', false);
             }
         });
 
