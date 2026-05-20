@@ -28,7 +28,8 @@ body {
   color: var(--black);
   font-family: var(--font);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.55;
+  font-weight: 500;
   min-height: 100vh;
   padding: 24px;
   padding-right: calc(var(--nav-width) + 48px); /* leave room for fixed nav */
@@ -88,6 +89,187 @@ a {
   letter-spacing: 2px;
   color: var(--black);
   margin-bottom: 24px;
+}
+
+/* ============================================
+   RESUME TYPOGRAPHY + HIERARCHY
+   ============================================ */
+
+/* Resume container */
+
+.resume-box {
+  line-height: 1.65;
+  padding: 36px 42px;
+}
+
+/* Section spacing */
+
+.resume-section {
+  margin-bottom: 72px;
+}
+
+/* Section headings */
+
+.section-title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+
+  border-bottom: 2px dashed var(--black);
+
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  font-size: 13px;
+  opacity: 0.6;
+  line-height: 1.5;
+
+  margin-bottom: 28px;
+}
+
+/* Resume entries */
+
+.resume-entry {
+  margin-bottom: 32px;
+}
+
+.resume-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+
+  margin-bottom: 6px;
+}
+
+/* JOB TITLES / PROJECT NAMES */
+
+.resume-entry-title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* DATES */
+
+.resume-entry-date {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.5;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* ORGANIZATION / SCHOOL / TECH STACK */
+
+.resume-entry-sub {
+  font-size: 14px;
+  font-weight: 700;
+
+  opacity: 0.78;
+
+  margin-bottom: 14px;
+
+  line-height: 1.6;
+}
+
+/* LINKS */
+
+.resume-entry-links {
+  margin-top: -4px;
+  margin-bottom: 14px;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.resume-entry-links a {
+  border-bottom: 1px dashed var(--black);
+  padding-bottom: 1px;
+}
+
+.resume-entry-links a:hover {
+  opacity: 0.65;
+}
+
+/* AWARD TAG */
+
+.resume-entry-award {
+  display: inline-block;
+
+  margin-bottom: 16px;
+  padding: 5px 10px;
+
+  border: 1.5px dashed var(--black);
+  background: rgba(0, 0, 0, 0.04);
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+/* BULLETS */
+
+.resume-entry-bullets {
+  padding-left: 22px;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.resume-entry-bullets li {
+  margin-bottom: 8px;
+}
+
+/* Skills + hobbies spacing */
+
+#skills .resume-entry-sub,
+#hobbies .resume-entry-sub {
+  line-height: 1.9;
+}
+
+/* Spacer utility */
+
+.resume-spacer {
+  height: 10px;
+}
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 768px) {
+
+  .resume-box {
+    padding: 24px 20px;
+  }
+
+  .resume-entry-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .resume-entry-title {
+    font-size: 16px;
+  }
+
+  .resume-entry-date {
+    font-size: 11px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .resume-section {
+    margin-bottom: 56px;
+  }
 }
 
 /* --- MOBILE BANNER --- */
